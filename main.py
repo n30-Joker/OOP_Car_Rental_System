@@ -1,5 +1,5 @@
 from customer import Customer
-from rentalShops import RentalShop
+from rental_shops import RentalShop
 import time
     
 def expectedInt(answer):
@@ -34,15 +34,15 @@ time.sleep(2)
 
 while open:
     option = input(
-                f"\n{client.getName()}, what would you like to do?\n"
-                "1) Rent a car.\n"
-                "2) Check available cars.\n"
-                "3) Return car.\n"
-                "4) Loyalty programme.\n"
-                "5) Exit.\n"
-                "\n"
-                "Your choice: "
-                )
+        f"\n{client.getName()}, what would you like to do?\n"
+        "1) Rent a car.\n"
+        "2) Check available cars.\n"
+        "3) Return car.\n"
+        "4) Loyalty programme.\n"
+        "5) Exit.\n"
+        "\n"
+        "Your choice: "
+        )
 
     option = expectedInt(option)
     print(" ")
@@ -57,9 +57,9 @@ while open:
             if carType == "Suv": carType = "SUV"
             if shop.available(carType):
                 numDays = input(
-                            "For how many days do you want to rent?\n"
-                            "Your choice: "
-                            )
+                    "For how many days do you want to rent?\n"
+                    "Your choice: "
+                    )
                 numDays = expectedInt(numDays)
                 car = shop.giveTheCar(carType)
                 rate = shop.getRate(car, numDays, client.VIPStatus())

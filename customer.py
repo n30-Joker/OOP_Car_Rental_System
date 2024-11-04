@@ -10,7 +10,7 @@ class Customer:
             "car": None,
             "type": None,
             "days": 0
-        }
+            }
 
     def getName(self):
         return self.name
@@ -33,9 +33,11 @@ class Customer:
         self.carDetails["days"] = numDays
 
     def returnCar(self):
-        carReturned = { "car": self.carDetails.pop("car"),
+        carReturned = {
+            "car": self.carDetails.pop("car"),
             "type": self.carDetails.pop("type"),
-            "days": self.carDetails.pop("days")}
+            "days": self.carDetails.pop("days")
+            }
         self.noCar()
         return carReturned
     
