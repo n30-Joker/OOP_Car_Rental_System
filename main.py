@@ -1,8 +1,9 @@
 from customer import Customer
 from rental_shops import RentalShop
 import time
-    
-def expectedInt(answer):
+
+
+def expected_int(answer):
     correct = False
     while not correct:
         try:
@@ -17,24 +18,26 @@ def expectedInt(answer):
     
     return answer
 
-def goBack():
+
+def go_back():
     input("\n(Press any key to go back.)")
+
 
 client = Customer("Tarek")
 
 shop = RentalShop("RentACar")
-shop.addToStock("Hatchback", 4)
-shop.addToStock("Sedan", 3)
-shop.addToStock("SUV", 3)
+shop.add_to_stock("Hatchback", 4)
+shop.add_to_stock("Sedan", 3)
+shop.add_to_stock("SUV", 3)
 
 open = True
 
-print(f"Welcome to {shop.getName()}!")
+print(f"Welcome to {shop.get_name()}!")
 time.sleep(2)
 
 while open:
     option = input(
-        f"\n{client.getName()}, what would you like to do?\n"
+        f"\n{client.get_name()}, what would you like to do?\n"
         "1) Rent a car.\n"
         "2) Check available cars.\n"
         "3) Return car.\n"
@@ -44,52 +47,53 @@ while open:
         "Your choice: "
         )
 
-    option = expectedInt(option)
+    option = expected_int(option)
     print(" ")
     if option == 1:
-        if client.carRented():
+        if client.car_rented():
             print(
                 "Unfortunately we only rent one car per customer.\n"
                 "We appreciate you wanting to use our service!"
                 )
         else:
-            carType = input("Select car type: ").lower().title()
-            if carType == "Suv": carType = "SUV"
-            if shop.available(carType):
-                numDays = input(
+            car_type = input("Select car type: ").lower().title()
+            if car_type == "Suv": car_type = "SUV"
+
+            if shop.available(car_type):
+                num_days = input(
                     "For how many days do you want to rent?\n"
                     "Your choice: "
                     )
-                numDays = expectedInt(numDays)
-                car = shop.giveTheCar(carType)
-                rate = shop.getRate(car, numDays, client.VIPStatus())
+                num_days = expected_int(num_days)
+                car = shop.give_the_car(car_type)
+                rate = shop.get_rate(car, num_days, client.vip_status())
                 print(
-                    f"You have rented a {carType} car for {numDays} days.\n"
+                    f"You have rented a {car_type} car for {num_days} days.\n"
                     f"You will be charged £{rate} per day.\n"
                     "We hope that you enjoy our service."
                     )
-                client.rentCar(car, carType, numDays)
+                client.rent_car(car, car_type, num_days)
             else:
                 print(
-                    f"Unfortunately no {carType} is available.\n"
+                    f"Unfortunately no {car_type} is available.\n"
                     "We apologise for any inconvenience caused."
                     )
                 
-        goBack()
+        go_back()
 
     elif option == 2:
-        shop.getStock()
-        goBack()
+        shop.get_stock()
+        go_back()
 
     elif option == 3:
-        details = client.returnCar()
-        car, carType, numDays = details["car"], details["type"], details["days"]
-        if shop.returnCar(carType, car):
-            rate = shop.getRate(car, numDays, client.VIPStatus())
-            price = shop.getPrice(rate, numDays)
+        details = client.return_car()
+        car, car_type, num_days = details["car"], details["type"], details["days"]
+        if shop.return_car(car_type, car):
+            rate = shop.get_rate(car, num_days, client.vip_status())
+            price = shop.get_price(rate, num_days)
             print(
                 "Thank you for returning the car to us!\n"
-                f"You have rented a {carType} car for {numDays} days.\n"
+                f"You have rented a {car_type} car for {num_days} days.\n"
                 f"Your daily rate is £{rate}.\n"
                 f"Amount to pay: £{price}\n"
                 "Please pay the amount online or in-store.\n"
@@ -99,18 +103,18 @@ while open:
         else:
             print("Unfortunately you have no car to return.")
         
-        goBack()
+        go_back()
 
     elif option == 4:
-        if client.VIPStatus():
+        if client.vip_status():
             print(
                 "You are part of our loyalty programme!\n"
-                "You have access to discounted rental rates."
+                "Enjoy our discounted rental rates!"
                 )
             downgrade = input("Press e to downgrade: ").lower()
             if downgrade == "e":
                 client = shop.downgrade(client)
-                goBack()
+                go_back()
             else:
                 time.sleep(2)
         else:
@@ -121,7 +125,7 @@ while open:
             upgrade = input("Press y to upgrade: ").lower()
             if upgrade == "y":
                 client = shop.upgrade(client)
-                goBack()
+                go_back()
             else:
                 time.sleep(2)
 

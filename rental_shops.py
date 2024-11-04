@@ -63,14 +63,14 @@ class RentalShop:
         except KeyError:
             return False
     
-    def get_rate(self, car, days, isVIP):
-        if isVIP:
-            return car.getVIPRate()
+    def get_rate(self, car, days, is_vip):
+        if is_vip:
+            return car.get_vip_rate()
         
         if days < 7:
-            return car.getBelowWeekRate()
+            return car.get_below_week_rate()
         else:
-            return car.getWeekOrMoreRate()    
+            return car.get_week_or_more_rate()    
 
     def get_price(self, rate, days):
         return rate * days   
@@ -78,16 +78,16 @@ class RentalShop:
     def upgrade(self, client):
         print("You have now joined our loyalty programme!")
         name = client.get_name() + "(VIP)" # Add VIP tag.
-        VIPClient = VIP(name)
-        VIPClient.transfer_details(client)
+        vip_client = VIP(name)
+        vip_client.transfer_details(client)
         self.vip_list.append(name)
-        return VIPClient    
+        return vip_client    
 
-    def downgrade(self, VIPClient):
+    def downgrade(self, vip_client):
         print("We are sorry to have you leave our loyalty programme...")
-        name = VIPClient.get_name()
+        name = vip_client.get_name()
         client = Customer(name[:-5]) # Remove VIP tag.
-        client.transfer_details(VIPClient)
+        client.transfer_details(vip_client)
         self.vip_list.remove(name)
         return client
 
