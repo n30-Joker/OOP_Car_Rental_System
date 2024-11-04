@@ -19,15 +19,6 @@ class RentalShop:
 
     def getName(self):
         return self.name
-
-    def getKeys(self):
-        return self.stock.keys()
-    
-    def getValues(self):
-        return self.stock.values()
-    
-    def getItems(self):
-        return self.stock.items()
     
     # Private method
     def __addCar(self, key, car):
@@ -57,7 +48,7 @@ class RentalShop:
         print(text + f"\nTotal: {sum}")
         print("#####################################")
 
-    def removeStock(self, key):
+    def giveTheCar(self, key):
         return self.stock[key].pop()
     
     def available(self, key):
@@ -72,20 +63,18 @@ class RentalShop:
     def getRate(self, car, days, isVIP):
         if isVIP:
             return car.getVIPRate()
+        
         if days < 7:
             return car.getBelowWeekRate()
         else:
-            return car.getWeekOrMoreRate()
-    
-    def getVIPRate(self, car):
-        return car.getVIPRate()    
+            return car.getWeekOrMoreRate()    
 
     def getPrice(self, rate, days):
         return rate * days   
 
     def upgrade(self, client):
         print("You have now joined our loyalty programme!")
-        name = client.getName() + "(VIP)"
+        name = client.getName() + "(VIP)" # Add VIP tag.
         VIPClient = VIP(name)
         VIPClient.transferDetails(client)
         self.VIPList.append(name)
@@ -94,7 +83,7 @@ class RentalShop:
     def downgrade(self, VIPClient):
         print("We are sorry to have you leave our loyalty programme...")
         name = VIPClient.getName()
-        client = Customer(name[:-5])
+        client = Customer(name[:-5]) # Remove VIP tag.
         client.transferDetails(VIPClient)
         self.VIPList.remove(name)
         return client

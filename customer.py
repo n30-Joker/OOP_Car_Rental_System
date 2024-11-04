@@ -17,6 +17,9 @@ class Customer:
 
     def getCarDetails(self):
         return self.carDetails
+    
+    def setCarDetails(self, carDetails):
+        self.carDetails = carDetails
 
     def carRented(self):
         if self.carDetails["car"] != None:
@@ -40,7 +43,7 @@ class Customer:
         return False
     
     def transferDetails(self, client):
-        self.carDetails = client.getCarDetails()
+        self.setCarDetails(client.getCarDetails())
     
 class VIP(Customer):
     def __init__(self,name):
