@@ -44,9 +44,12 @@ class RentalShop:
             sum += amount
             text += key + ": " + str(amount) + " | "
         
-        print("\n################STOCK################")
-        print(text + f"\nTotal: {sum}")
-        print("#####################################")
+        print(
+            "\n################STOCK################\n"
+            + text 
+            + f"\nTotal: {sum}"
+            "#####################################"
+            )
 
     def giveTheCar(self, key):
         return self.stock[key].pop()
