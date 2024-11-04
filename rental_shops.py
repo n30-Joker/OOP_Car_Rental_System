@@ -15,27 +15,27 @@ class RentalShop:
             "Sedan":[],
             "SUV":[]
             }
-        self.vip_list = ["VIP1", "VIP2", "VIP3"]
+        self.vip_list = ["Customer1(VIP)", "Customer2(VIP)", "Customer3(VIP)"]
 
-    def getName(self):
+    def get_name(self):
         return self.name
     
     # Private method
-    def __addCar(self, key, car):
+    def __add_car(self, key, car):
         self.stock[key].append(car)
 
-    def returnCar(self, key, car):
+    def return_car(self, key, car):
         try:
-            self.__addCar(key, car)
+            self.__add_car(key, car)
             return True
         except KeyError:
             return False
 
-    def addToStock(self, key, amount):
+    def add_to_stock(self, key, amount):
         for i in range(amount):
-            self.__addCar(key, self.car_types[key])
+            self.__add_car(key, self.car_types[key])
 
-    def getStock(self):
+    def get_stock(self):
         sum = 0
         text = "| "
 
@@ -51,7 +51,7 @@ class RentalShop:
             "#####################################"
             )
 
-    def giveTheCar(self, key):
+    def give_the_car(self, key):
         return self.stock[key].pop()
     
     def available(self, key):
@@ -63,7 +63,7 @@ class RentalShop:
         except KeyError:
             return False
     
-    def getRate(self, car, days, isVIP):
+    def get_rate(self, car, days, isVIP):
         if isVIP:
             return car.getVIPRate()
         
@@ -72,22 +72,22 @@ class RentalShop:
         else:
             return car.getWeekOrMoreRate()    
 
-    def getPrice(self, rate, days):
+    def get_price(self, rate, days):
         return rate * days   
 
     def upgrade(self, client):
         print("You have now joined our loyalty programme!")
-        name = client.getName() + "(VIP)" # Add VIP tag.
+        name = client.get_name() + "(VIP)" # Add VIP tag.
         VIPClient = VIP(name)
-        VIPClient.transferDetails(client)
+        VIPClient.transfer_details(client)
         self.vip_list.append(name)
         return VIPClient    
 
     def downgrade(self, VIPClient):
         print("We are sorry to have you leave our loyalty programme...")
-        name = VIPClient.getName()
+        name = VIPClient.get_name()
         client = Customer(name[:-5]) # Remove VIP tag.
-        client.transferDetails(VIPClient)
+        client.transfer_details(VIPClient)
         self.vip_list.remove(name)
         return client
 
