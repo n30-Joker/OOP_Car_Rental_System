@@ -11,6 +11,7 @@ class Customer:
         car_details (dict): Dictionary holding 
             details about the current car rental.
     """
+    
     def __init__(self, name):
         """
         Initialises a Customer instance with the customer's name
@@ -80,11 +81,11 @@ class Customer:
         Returns:
             car_returned (dict): Contains details of the returned car.
         """
-        car_returned = { # Capture the details to return in a dictionary.
+        car_returned = {
             "car": self.car_details.pop("car"),
             "type": self.car_details.pop("type"),
             "days": self.car_details.pop("days")
-            }
+            } # Capture the details to return in a dictionary.
         self.no_car() # Reset inventory with no car.
         return car_returned # Returns the details of the returned car.
     
@@ -118,9 +119,10 @@ class VIP(Customer):
 
     Overrides the vip_status to reflect the customer's status.
     """
+
     def __init__(self, name):
         """
-        Initialises a VIP Customer instance with the provided name.
+        Initialises a VIP instance with the provided name.
 
         Parameters:
             name (str): Name of the customer with the loyalty programme.

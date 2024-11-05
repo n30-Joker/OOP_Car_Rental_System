@@ -8,6 +8,7 @@ class Car:
         week_or_more (int): Daily rate for rentals lasting a week or longer.
         vip (int): Discounted daily rate for customers with a loyalty programme.
     """
+
     def __init__(self, below_week, week_or_more, vip):
         """
         Initilaises a Car instance with specific daily rates for different scenarios.
@@ -38,6 +39,7 @@ class Hatchback(Car):
     Inherits all the methods from the Car class and sets 
     specific daily rates.
     """
+
     def __init__(self):
         """
         Initialises a Hatchback instance with the following rates:
@@ -55,6 +57,7 @@ class Sedan(Car):
     Inherits methods from Car class and specifies
     the daily rates.
     """
+
     def __init__(self):
         """
         Initialises a Sedan instance with the following rates:
@@ -72,6 +75,7 @@ class SUV(Car):
     Inherits methods from Car class and states
     the daily rates.
     """
+    
     def __init__(self):
         """
         Initialises a SUV instance with the following rates:
