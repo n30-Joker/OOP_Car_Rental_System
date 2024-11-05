@@ -12,7 +12,7 @@ class Car:
         """
         Initilaises a Car instance with specific daily rates for different scenarios.
 
-        Args:
+        Parameters:
             below_week (int): Rate for rentals shorter than a week.
             week_or_more (int): Rate for rentals of a week or more.
             vip (int): Special, discounted rate for VIP customers.

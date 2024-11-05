@@ -1,6 +1,7 @@
 from customer import Customer, VIP
 from cars import Hatchback, Sedan, SUV
 
+
 class RentalShop:
 
     def __init__(self, name):
@@ -15,7 +16,11 @@ class RentalShop:
             "Sedan":[],
             "SUV":[]
             }
-        self.vip_list = ["Customer1(VIP)", "Customer2(VIP)", "Customer3(VIP)"]
+        self.vip_list = [
+            "Customer1(VIP)", 
+            "Customer2(VIP)", 
+            "Customer3(VIP)"
+            ]
 
     def get_name(self):
         return self.name
@@ -52,7 +57,7 @@ class RentalShop:
             )
 
     def give_the_car(self, key):
-        return self.stock[key].pop()
+        return self.stock[key].pop() # Assume LIFO (Last In First Out)
     
     def available(self, key):
         try:

@@ -19,7 +19,7 @@ class Customer:
         Assumption:
             A new customer does not hold any car.
 
-        Args:
+        Parameters:
             name (str): Customer name.
         """
         self.name = name
@@ -46,7 +46,7 @@ class Customer:
         """
         Updates the car details for the customer.
 
-        Args:
+        Parameters:
             car_details (dict): Holds updated details.
         """
         self.car_details = car_details
@@ -64,7 +64,7 @@ class Customer:
         """
         Transfer car rental details for the customer from the shop.
 
-        Args:
+        Parameters:
             car_obj: The car object being rented.
             car_type (str): The type of the car (e.g. Hatchback, Sedan or SUV).
             num_days (str): The number of days the car is rented for.
@@ -104,7 +104,7 @@ class Customer:
         """
         Transfers car rental details from one account to another.
 
-        Args:
+        Parameters:
             client (Customer): Account whose details are to be copied.
         """
         self.set_car_cetails(client.get_car_cetails())
@@ -122,9 +122,9 @@ class VIP(Customer):
         """
         Initialises a VIP Customer instance with the provided name.
 
-        Args:
+        Parameters:
             name (str): Name of the customer with the loyalty programme.
-                The naming convention is 'customer_name(VIP).'
+                The naming convention is 'customer_name(VIP)'.
         """
         super().__init__(name)
     
