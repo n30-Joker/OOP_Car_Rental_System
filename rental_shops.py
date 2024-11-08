@@ -1,4 +1,4 @@
-from customer import Customer, VIP
+from customer import *
 from cars import Hatchback, Sedan, SUV
 
 
@@ -151,20 +151,53 @@ class RentalShop:
         Retrieves the rate for renting a car based on the rental duration
         and the VIP status of the customer.
 
-        Parameters
+        Assumptions:
+            The rate is kept as an integer value.
+
+        Parameters:
+            car: The car object being rented.
+            num_days (int): The number of days the car is rented for.
+            is_vip (bool): Indicates if the customer is part of the
+                loyalty programme.
+
+        Returns:
+            int: The rental rate for the customer type and 
+                specified duration.
         """
-        if is_vip:
+        if is_vip: # Special rate no matter how many days.
             return car.get_vip_rate()
         
-        if num_days < 7:
+        if num_days < 7: # Conditional rate for regular customers.
             return car.get_below_week_rate()
         else:
             return car.get_week_or_more_rate()    
 
     def get_price(self, rate, num_days):
+        """
+        Calculates the total price of a rental from the rate 
+        and length of time the car is rented for.
+
+        Parameters:
+            rate (int): The daily rate for renting the car.
+            num_days: The number of days the car will or
+                is rented for.
+
+        Returns:
+            int: The total price of the rental.
+        """
         return rate * num_days   
 
     def upgrade(self, client):
+        """
+        Signs the customer up to the loyalty programme, 
+        adding them to the VIP list.
+
+        Parameters:
+            client (Customer): The customer being upgraded to VIP.
+
+        Returns:
+            vip_client (VIP): A new VIP object with the customer's details transferred.
+        """
         print("You have now joined our loyalty programme!")
         name = client.get_name() + "(VIP)" # Add VIP tag.
         vip_client = VIP(name)
@@ -173,9 +206,24 @@ class RentalShop:
         return vip_client    
 
     def downgrade(self, vip_client):
+        """
+        Downgrade a VIP customer back to a regular customer status,
+        as they have decided to leave the loyalty programme, removing
+        the VIP privileges.
+
+        Assumptions:
+            All VIP customers have a '(VIP)' tag at the end of their name.
+
+        Parameters:
+            vip_client (VIP): The VIP customer being downgraded.
+
+        Returns:
+            client (Customer): A new Customer object with the VIP's
+                details transferred.
+        """
         print("We are sorry to have you leave our loyalty programme...")
         name = vip_client.get_name()
-        client = Customer(name[:-5]) # Remove VIP tag.
+        client = Customer(name[:-5]) # Remove VIP tag (last 5 characters).
         client.transfer_details(vip_client)
         self.vip_list.remove(name)
         return client

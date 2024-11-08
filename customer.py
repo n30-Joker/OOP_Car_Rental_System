@@ -120,7 +120,7 @@ class VIP(Customer):
     Overrides the vip_status to reflect the customer's status.
     """
 
-    def __init__(self, name):
+    def __init__(self, name): # Can add more paramters later.
         """
         Initialises a VIP instance with the provided name.
 
