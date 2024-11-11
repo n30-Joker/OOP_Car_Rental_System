@@ -44,9 +44,6 @@ def go_back():
     input("\n(Press any key to go back.)")
 
 
-# Instantiate a new regular customer named 'TestCustomer'
-client = Customer("TestCustomer")
-
 # Create a new rental shop named 'RentACar'.
 # Add cars to the shop's inventory.
 # Currently only 3 types of cars available: hatchback, sedan and SUV
@@ -58,7 +55,12 @@ shop.add_to_stock("SUV", 3) # Can add more types later on.
 open = True
 
 print(f"Welcome to {shop.get_name()}!")
-time.sleep(2) # Short pause for beter user experience,
+time.sleep(2) # Short pause for beter user experience.
+
+client_name = input("Please enter your name: ") # Simple name request.
+# Assumption: Customer is initially a regular customer who has not
+# signed up to the loyalty programme.
+client = Customer(client_name) # Instantiate a new regular customer with the provided name.
 
 # Main program loop.
 while open:
