@@ -109,7 +109,7 @@ class RentalShop:
         print(
             "\n################STOCK################\n"
             + stock_summary 
-            + f"\nTotal: {sum}"
+            + f"\nTotal: {sum}\n"
             "#####################################"
             )
 
@@ -221,7 +221,10 @@ class RentalShop:
             client (Customer): A new Customer object with the VIP's
                 details transferred.
         """
-        print("We are sorry to have you leave our loyalty programme...")
+        print(
+            "We are sorry to have you leave our loyalty programme...\n"
+            "You are welcome to sign up again anytime!"
+            )
         name = vip_client.get_name()
         client = Customer(name[:-5]) # Remove VIP tag (last 5 characters).
         client.transfer_details(vip_client)

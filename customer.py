@@ -18,12 +18,13 @@ class Customer:
         and car details.
 
         Assumption:
+            The customer only has a name, for simplicity.
             A new customer does not hold any car.
 
         Parameters:
             name (str): Customer name.
         """
-        self.name = name
+        self.name = name # Can add other details, e.g. email, age, gender.
         self.car_details = {} # Stores details of the car the customer has rented.
         self.no_car() # Initialises the dictionary with no data. The new customer has no cars.
     
