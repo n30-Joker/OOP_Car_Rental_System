@@ -188,12 +188,12 @@ while shop.is_currently_open():
                 )
             
             # Offer option to leave the loyalty programme.
-            downgrade = input("Press e to downgrade: ").lower()
-            if downgrade == "e":
+            downgrade = input("Press y to downgrade: ").lower()
+            if downgrade == "y":
                 print(f"Downgrading {client.get_customer_name()} and transferring details.")
                 load()
 
-                client = shop.downgrade(client) # Regular customer.
+                client = shop.downgrade_vip_customer(client) # Regular customer.
                 go_back()
             else:
                 load() # Pause briefly and go back to the main menu.
@@ -210,7 +210,7 @@ while shop.is_currently_open():
                 print(f"Upgrading {client.get_customer_name()} and transferring details.")
                 load()
 
-                client = shop.upgrade(client) # VIP customer.
+                client = shop.upgrade_customer(client) # VIP customer.
                 go_back()
             else:
                 load() # Pause briefly and go back to the main menu.

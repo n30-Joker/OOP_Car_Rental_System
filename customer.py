@@ -104,14 +104,14 @@ class Customer:
         """
         return False
     
-    def transfer_details(self, client):
+    def transfer_vip_customer_details(self, vip_client):
         """
-        Transfers car rental details from one account to another.
+        Transfers car rental details from a vip account to a regular one.
 
         Parameters:
-            client (Customer): Account whose details are to be copied.
+            vip_client (VIP): VIP account whose details are to be copied.
         """
-        self.set_car_details(client.get_car_details())
+        self.set_car_details(vip_client.get_car_details())
 
 
 class VIP(Customer):
@@ -141,3 +141,12 @@ class VIP(Customer):
             bool: True, stating the customer is a loyalty programme member. 
         """
         return True
+    
+    def transfer_customer_details(self, client):
+        """
+        Transfers car rental details from a regular account to a vip account.
+
+        Parameters:
+            client (Customer): Regular customer account whose details are to be copied.
+        """
+        self.set_car_details(client.get_car_details())

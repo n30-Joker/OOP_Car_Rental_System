@@ -5,7 +5,9 @@ from cars import Hatchback, Sedan, SUV # Composition, the classes only exist in 
 
 class RentalShop:
     """
-    A class to represent a car rental shop.
+    A class to represent a car rental shop. Allows for rental transactions between the
+    user and the shop, as well as signing in or our of the loyalty programme and display
+    the stock of available cars.
 
     Attributes:
         rental_shop_name (str).
@@ -203,7 +205,7 @@ class RentalShop:
         """
         return rate * num_days   
 
-    def upgrade(self, client):
+    def upgrade_customer(self, client):
         """
         Signs the customer up to the loyalty programme, 
         adding them to the VIP list.
@@ -217,11 +219,11 @@ class RentalShop:
         print("You have now joined our loyalty programme!")
         vip_customer_name = client.get_customer_name() + "(VIP)" # Add VIP tag.
         vip_client = VIP(vip_customer_name)
-        vip_client.transfer_details(client)
+        vip_client.transfer_customer_details(client)
         self.vip_customers.append(vip_customer_name)
         return vip_client    
 
-    def downgrade(self, vip_client):
+    def downgrade_vip_customer(self, vip_client):
         """
         Downgrade a VIP customer back to a regular customer status,
         as they have decided to leave the loyalty programme, removing
@@ -243,7 +245,7 @@ class RentalShop:
             )
         vip_customer_name = vip_client.get_customer_name()
         client = Customer(vip_customer_name[:-5]) # Remove VIP tag (last 5 characters).
-        client.transfer_details(vip_client)
+        client.transfer_vip_customer_details(vip_client)
         self.vip_customers.remove(vip_customer_name)
         return client
 
