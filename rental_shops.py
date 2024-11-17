@@ -1,6 +1,6 @@
 # RentalShop class for rental transactions with a customer.
-from customer import *
-from cars import Hatchback, Sedan, SUV
+from customer import * # Aggregation, the customer and rental shop classes exist individually.
+from cars import Hatchback, Sedan, SUV # Composition, the classes only exist in this class.
 
 
 class RentalShop:
@@ -8,7 +8,7 @@ class RentalShop:
     A class to represent a car rental shop.
 
     Attributes:
-        rental_shop_name (str): The name of the shop.
+        rental_shop_name (str).
         available_car_types (dict): A dictionary which maps car type names to their
             respective objects.
         rental_shop_stock (dict): A dictionary mapping car type names to a list of available
@@ -31,7 +31,7 @@ class RentalShop:
                 real names, with the '(VIP)' tag added as the identifier.
 
         Parameters:
-            rental_shop_name (str): The rental shop's name.
+            rental_shop_name (str).
         """
         self.rental_shop_name = rental_shop_name
         self.available_car_types = {
@@ -71,7 +71,7 @@ class RentalShop:
         Adds a car to the stock for a specific car type.
         
         Parameters:
-            car_type (str): The car type.
+            car_type (str).
             car: The car object to add to the list.
         """
         self.rental_shop_stock[car_type].append(car)
@@ -82,7 +82,7 @@ class RentalShop:
         back to the shop's stock.
 
         Parameters:
-            car_type (str): The type of car being returned.
+            car_type (str): the type of car to return to the rental shop.
             car: The car object being returned.
 
         Returns:
@@ -101,7 +101,7 @@ class RentalShop:
         car type.
 
         Parameters:
-            car_type (str): The type of car to add to stock.
+            car_type (str): The type of car to add to the rental shop's stock.
             amount (int): The number of cars to add to the garage.
         """
         for i in range(amount):
@@ -154,7 +154,7 @@ class RentalShop:
             car_type (str): The type of car to check availability for.
 
         Returns:
-            bool: True if the car type is in stock, otherwise False.
+            bool: True if the car type is in the rental shop's stock, otherwise False.
         """
         try:
             return len(self.rental_shop_stock[car_type]) > 0 # True if there are 0 or more cars of that type, False otherwise
@@ -168,6 +168,7 @@ class RentalShop:
 
         Assumptions:
             The rate is kept as an integer value.
+            For simplicity, the only currency involved is £.
 
         Parameters:
             car: The car object being rented.
@@ -177,7 +178,7 @@ class RentalShop:
 
         Returns:
             int: The rental rate for the customer type and 
-                specified duration.
+                specified duration (£/day).
         """
         if is_vip: # Special rate no matter how many days.
             return car.get_vip_rate()
@@ -198,7 +199,7 @@ class RentalShop:
                 is rented for.
 
         Returns:
-            int: The total price of the rental.
+            int: The total price of the rental, in £.
         """
         return rate * num_days   
 

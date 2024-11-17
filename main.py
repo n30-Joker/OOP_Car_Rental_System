@@ -23,7 +23,7 @@ def expected_int(answer):
     the user to re-enter a valid number.
 
     Assumptions:
-        The user eventually enters a number.
+        The user eventually enters a whole number (integer).
 
     Parameters:
         answer (str): The user's input which is expected to be
@@ -62,9 +62,10 @@ def go_back():
 
 
 # Create a new rental shop named 'RentACar'.
+# Assumption: For simplicity, only one shop exists in this platform.
+shop = RentalShop("RentACar")
 # Add cars to the shop's inventory.
 # Currently only 3 types of cars available: hatchback, sedan and SUV
-shop = RentalShop("RentACar")
 shop.add_to_stock("Hatchback", 4)
 shop.add_to_stock("Sedan", 3)
 shop.add_to_stock("SUV", 3) # Can add more car types later on.
@@ -72,11 +73,14 @@ shop.add_to_stock("SUV", 3) # Can add more car types later on.
 shop.open_shop()
 load() # Short pause for better user experience.
 
+# Simple login by entering just a name.
+# Assumption: For simplicity, the user does not require any further information 
+#   in order to log in to the rental platform.
 client_name = input("You are not logged in.\n"
                     "Please enter your name: "
-                    ) # Simple name request.
+                    )
 # Assumption: Customer is initially a regular customer who has not
-# signed up to the loyalty programme.
+#   signed up to the loyalty programme.
 client = Customer(client_name) # Instantiate a new regular customer with the provided name.
 load()
 
@@ -89,7 +93,7 @@ while shop.is_currently_open():
         "3) Return car.\n"
         "4) Loyalty programme.\n" # Enables upgrading and downgrading the customer status.
         "5) Exit.\n"
-        "\n"
+        "\n" # Blank line for readability.
         "Your choice: "
         )
 
@@ -148,7 +152,8 @@ while shop.is_currently_open():
             load()
 
             print(
-                "Thank you for returning the car to us!\n\n"
+                "Thank you for returning the car to us!\n"
+                "\n"
                 "Calculating the bill."
                 )
             load()
@@ -162,7 +167,8 @@ while shop.is_currently_open():
                 f"Your daily rate is £{rate}.\n"
                 f"Amount to pay: £{price}\n"
                 "Please pay the amount online or in-store.\n"
-                "############################################\n\n"
+                "############################################\n"
+                "\n"
                 "Thank you for using our service!\n"
                 "Have a good day!"
                 )

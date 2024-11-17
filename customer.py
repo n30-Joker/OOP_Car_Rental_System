@@ -8,7 +8,7 @@ class Customer:
         Only one car can be rented per customer.
 
     Attributes:
-        customer_name (str): The name of the customer.
+        customer_name (str).
         car_details (dict): Dictionary holding 
             details about the current car rental.
     """
@@ -23,7 +23,7 @@ class Customer:
             A new customer does not hold any car.
 
         Parameters:
-            customer_name (str): Customer name.
+            customer_name (str).
         """
         self.customer_name = customer_name # Can add other details, e.g. email, age, gender.
         self.car_details = {} # Stores details of the car the customer has rented.
