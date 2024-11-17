@@ -4,6 +4,9 @@ class Car:
     Base class representing a car with daily rates 
     for different rental durations.
 
+    Assumptions:
+        For simplicity, the only currency being handled is the Great British Pound (GBP/£).
+
     Attributes:
         below_week_rate (int): Daily rate for rentals taken for less than a week.
         week_or_more_rate (int): Daily rate for rentals lasting a week or longer.
