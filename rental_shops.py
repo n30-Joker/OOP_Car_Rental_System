@@ -15,6 +15,7 @@ class RentalShop:
             cars in the rental shop garage.
         vip_customers (list): A list of customers' names who are signed up to the shop's
             loyalty programme.
+        is_open (bool): True if the shop is open, False if the shop is closed.
     """
 
     def __init__(self, rental_shop_name):
@@ -48,9 +49,21 @@ class RentalShop:
             "Customer2(VIP)", 
             "Customer3(VIP)"
             ] # Assume 3 VIP customers exist.
+        self.is_open = False # Shop is initially closed.
 
     def get_rental_shop_name(self):
         return self.rental_shop_name
+    
+    def is_currently_open(self):
+        return self.is_open
+    
+    def open_shop(self):
+        print(f"Welcome to {self.rental_shop_name}!") # Friendly welcome message for better UX(User Experience).
+        self.is_open = True
+
+    def close_shop(self):
+        print("\nThank you for stopping by! See you soon!") # Friendly exit message, improves UX.
+        self.is_open = False
     
     # Private method, working only within the class.
     def __add_car(self, car_type, car):

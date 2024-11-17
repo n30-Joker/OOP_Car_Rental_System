@@ -8,7 +8,7 @@ class Customer:
         Only one car can be rented per customer.
 
     Attributes:
-        name (str): The name of the customer.
+        customer_name (str): The name of the customer.
         car_details (dict): Dictionary holding 
             details about the current car rental.
     """
@@ -23,7 +23,7 @@ class Customer:
             A new customer does not hold any car.
 
         Parameters:
-            name (str): Customer name.
+            customer_name (str): Customer name.
         """
         self.customer_name = customer_name # Can add other details, e.g. email, age, gender.
         self.car_details = {} # Stores details of the car the customer has rented.
@@ -37,16 +37,16 @@ class Customer:
         self.car_details = {
             "car": None,    # No car rented.
             "type": None,   # No car type specified.
-            "days": 0       # Zero days rented.
+            "days rented": 0       # Zero days rented.
             }
 
     def get_customer_name(self):
         return self.customer_name
 
-    def get_car_cetails(self):
+    def get_car_details(self):
         return self.car_details
     
-    def set_car_cetails(self, car_details):
+    def set_car_details(self, car_details):
         """
         Updates the car details for the customer.
 
@@ -75,7 +75,7 @@ class Customer:
         """
         self.car_details["car"] = car_obj
         self.car_details["type"] = car_type
-        self.car_details["days"] = num_days
+        self.car_details["days rented"] = num_days
 
     def return_car(self):
         """
@@ -87,7 +87,7 @@ class Customer:
         returned_car_details = {
             "car": self.car_details.pop("car"),
             "type": self.car_details.pop("type"),
-            "days": self.car_details.pop("days")
+            "days rented": self.car_details.pop("days rented")
             } # Capture the details to return in a dictionary.
         self.__empty_garage() # Reset inventory with no car.
         return returned_car_details # Returns the details of the returned car.
@@ -111,7 +111,7 @@ class Customer:
         Parameters:
             client (Customer): Account whose details are to be copied.
         """
-        self.set_car_cetails(client.get_car_cetails())
+        self.set_car_details(client.get_car_details())
 
 
 class VIP(Customer):
@@ -123,15 +123,15 @@ class VIP(Customer):
     Overrides the is_vip method to reflect the customer's status (polymorphism).
     """
 
-    def __init__(self, name): # Can add more paramaters later.
+    def __init__(self, vip_name): # Can add more paramaters later.
         """
         Initialises a VIP instance with the provided name.
 
         Parameters:
-            name (str): Name of the customer with the loyalty programme.
+            vip_name (str): Name of the customer with the loyalty programme.
                 The naming convention is 'customer_name(VIP)'.
         """
-        super().__init__(name)
+        super().__init__(vip_name)
     
     def is_vip(self):
         """

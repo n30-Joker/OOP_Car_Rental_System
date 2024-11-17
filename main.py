@@ -69,19 +69,19 @@ shop.add_to_stock("Hatchback", 4)
 shop.add_to_stock("Sedan", 3)
 shop.add_to_stock("SUV", 3) # Can add more car types later on.
 
-shop_is_open = True
-
-print(f"Welcome to {shop.get_rental_shop_name()}!")
+shop.open_shop()
 load() # Short pause for better user experience.
 
-client_name = input("Please enter your name: ") # Simple name request.
+client_name = input("You are not logged in.\n"
+                    "Please enter your name: "
+                    ) # Simple name request.
 # Assumption: Customer is initially a regular customer who has not
 # signed up to the loyalty programme.
 client = Customer(client_name) # Instantiate a new regular customer with the provided name.
 load()
 
 # Main program loop.
-while shop_is_open:
+while shop.is_currently_open():
     option = input(
         f"{client.get_customer_name()}, what would you like to do?\n"
         "1) Rent a car.\n"
@@ -99,7 +99,7 @@ while shop_is_open:
         if client.is_renting_a_car(): # Customer already has a car.
             print(
                 "\nUnfortunately we only rent one car per customer.\n"
-                f"We appreciate your compliance with the {shop.get_name()} company policy."
+                f"We appreciate your compliance with the {shop.get_rental_shop_name()} company policy."
                 )
         else:
             load()
@@ -141,7 +141,7 @@ while shop_is_open:
 
     elif option == 3:
         details = client.return_car() # Retrieve rental details from the customer,
-        car, car_type, num_days = details["car"], details["type"], details["days"]
+        car, car_type, num_days = details["car"], details["type"], details["days rented"]
 
         if shop.is_returnable(car_type, car): # Check if the car type is valid and can be returned.
             print("Retrieving the car.")
@@ -210,9 +210,8 @@ while shop_is_open:
                 load() # Pause briefly and go back to the main menu.
 
     elif option == 5: # Exit the program.
-        print("\nThank you for stopping by! See you soon!")
+        shop.close_shop()
         load() # Short delay for friendly exit message.
-        shop_is_open = False
 
     else: # Handle invalid options.
         print("Invalid option, choose between the available choices.")
