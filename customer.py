@@ -1,3 +1,4 @@
+# Customer and VIP classes holding the client's information.
 class Customer:
     """
     Represents a customer who can rent cars, 
@@ -12,7 +13,7 @@ class Customer:
             details about the current car rental.
     """
     
-    def __init__(self, name):
+    def __init__(self, customer_name):
         """
         Initialises a Customer instance with the customer's name
         and car details.
@@ -24,11 +25,12 @@ class Customer:
         Parameters:
             name (str): Customer name.
         """
-        self.name = name # Can add other details, e.g. email, age, gender.
+        self.customer_name = customer_name # Can add other details, e.g. email, age, gender.
         self.car_details = {} # Stores details of the car the customer has rented.
-        self.no_car() # Initialises the dictionary with no data. The new customer has no cars.
+        self.__empty_garage() # Initialises the dictionary with no data. The new customer has no cars.
     
-    def no_car(self):
+    # Private method, works only within the class.
+    def __empty_garage(self):
         """
         Resets the customer's car details to have no cars.
         """
@@ -38,8 +40,8 @@ class Customer:
             "days": 0       # Zero days rented.
             }
 
-    def get_name(self):
-        return self.name
+    def get_customer_name(self):
+        return self.customer_name
 
     def get_car_cetails(self):
         return self.car_details
@@ -53,7 +55,7 @@ class Customer:
         """
         self.car_details = car_details
 
-    def car_rented(self):
+    def is_renting_a_car(self):
         """
         Checks if the customer currently holds a rented car.
 
@@ -69,7 +71,7 @@ class Customer:
         Parameters:
             car_obj: The car object being rented.
             car_type (str): The type of the car (e.g. Hatchback, Sedan or SUV).
-            num_days (str): The number of days the car is rented for.
+            num_days (int): The number of days the car is rented for.
         """
         self.car_details["car"] = car_obj
         self.car_details["type"] = car_type
@@ -80,17 +82,17 @@ class Customer:
         Empties the customer's garage and returns the car details.
 
         Returns:
-            car_returned (dict): Contains details of the returned car.
+            returned_car_details (dict): Contains details of the returned car.
         """
-        car_returned = {
+        returned_car_details = {
             "car": self.car_details.pop("car"),
             "type": self.car_details.pop("type"),
             "days": self.car_details.pop("days")
             } # Capture the details to return in a dictionary.
-        self.no_car() # Reset inventory with no car.
-        return car_returned # Returns the details of the returned car.
+        self.__empty_garage() # Reset inventory with no car.
+        return returned_car_details # Returns the details of the returned car.
     
-    def vip_status(self):
+    def is_vip(self):
         """
         Specifies if the customer has a loyalty programme.
 
@@ -118,10 +120,10 @@ class VIP(Customer):
 
     Inherits methods from the Customer class, and specifies the customer's name.
 
-    Overrides the vip_status to reflect the customer's status.
+    Overrides the is_vip method to reflect the customer's status (polymorphism).
     """
 
-    def __init__(self, name): # Can add more paramters later.
+    def __init__(self, name): # Can add more paramaters later.
         """
         Initialises a VIP instance with the provided name.
 
@@ -131,7 +133,7 @@ class VIP(Customer):
         """
         super().__init__(name)
     
-    def vip_status(self):
+    def is_vip(self):
         """
         Returns the VIP status of the customer.
 

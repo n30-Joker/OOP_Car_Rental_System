@@ -1,35 +1,36 @@
+# Car, Hatchback, Sedan, and SUV classes holding their daily rates.
 class Car:
     """
     Base class representing a car with daily rates 
     for different rental durations.
 
     Attributes:
-        below_week (int): Daily rate for rentals taken for less than a week.
-        week_or_more (int): Daily rate for rentals lasting a week or longer.
-        vip (int): Discounted daily rate for customers with a loyalty programme.
+        below_week_rate (int): Daily rate for rentals taken for less than a week.
+        week_or_more_rate (int): Daily rate for rentals lasting a week or longer.
+        vip_rate (int): Discounted daily rate for customers with a loyalty programme.
     """
 
-    def __init__(self, below_week, week_or_more, vip):
+    def __init__(self, below_week_rate, week_or_more_rate, vip_rate):
         """
         Initilaises a Car instance with specific daily rates for different scenarios.
 
         Parameters:
-            below_week (int): Rate for rentals shorter than a week.
-            week_or_more (int): Rate for rentals of a week or more.
-            vip (int): Special, discounted rate for VIP customers.
+            below_week_rate (int): Daily rate for rentals shorter than a week.
+            week_or_more_rate (int): Daily rate for rentals of a week or more.
+            vip_rate (int): Special, discounted daily rate for VIP customers.
         """
-        self.below_week = below_week
-        self.week_or_more = week_or_more
-        self.vip = vip
+        self.below_week_rate = below_week_rate
+        self.week_or_more_rate = week_or_more_rate
+        self.vip_rate = vip_rate
 
     def get_below_week_rate(self): 
-        return self.below_week
+        return self.below_week_rate
     
     def get_week_or_more_rate(self):
-        return self.week_or_more
+        return self.week_or_more_rate
     
     def get_vip_rate(self):
-        return self.vip
+        return self.vip_rate
 
 
 class Hatchback(Car):

@@ -1,3 +1,4 @@
+# RentalShop class for rental transactions with a customer.
 from customer import *
 from cars import Hatchback, Sedan, SUV
 
@@ -7,16 +8,16 @@ class RentalShop:
     A class to represent a car rental shop.
 
     Attributes:
-        name (str): The name of the shop.
-        car_types (dict): A dictionary which maps car type names to their
+        rental_shop_name (str): The name of the shop.
+        available_car_types (dict): A dictionary which maps car type names to their
             respective objects.
-        stock (dict): A dictionary mapping car type names to a list of available
+        rental_shop_stock (dict): A dictionary mapping car type names to a list of available
             cars in the rental shop garage.
-        vip_list (list): A list of customers' names who are signed up to the shop's
+        vip_customers (list): A list of customers' names who are signed up to the shop's
             loyalty programme.
     """
 
-    def __init__(self, name):
+    def __init__(self, rental_shop_name):
         """
         Initialises a RentalShop instance with the shop's name, the car types 
         they sell, empty stock and a predefined list of customers who are members
@@ -29,45 +30,46 @@ class RentalShop:
                 real names, with the '(VIP)' tag added as the identifier.
 
         Parameters:
-            name (str): The rental shop's name.
+            rental_shop_name (str): The rental shop's name.
         """
-        self.name = name
-        self.car_types = {
+        self.rental_shop_name = rental_shop_name
+        self.available_car_types = {
             "Hatchback": Hatchback(),
             "Sedan": Sedan(),
             "SUV": SUV()
             } # Currently only three types of cars are sold on this platform.
-        self.stock = {
+        self.rental_shop_stock = {
             "Hatchback":[],
             "Sedan":[],
             "SUV":[]
             } # The stock is initially empty.
-        self.vip_list = [
+        self.vip_customers = [
             "Customer1(VIP)", 
             "Customer2(VIP)", 
             "Customer3(VIP)"
             ] # Assume 3 VIP customers exist.
 
-    def get_name(self):
-        return self.name
+    def get_rental_shop_name(self):
+        return self.rental_shop_name
     
-    # Private method to add a car to the stock.
-    def __add_car(self, key, car):
+    # Private method, working only within the class.
+    def __add_car(self, car_type, car):
         """
         Adds a car to the stock for a specific car type.
         
         Parameters:
-            key (str): The car type.
-            car: Thr car object to add to the list.
+            car_type (str): The car type.
+            car: The car object to add to the list.
         """
-        self.stock[key].append(car)
+        self.rental_shop_stock[car_type].append(car)
 
-    def return_car(self, key, car):
+    def is_returnable(self, car_type, car):
         """
-        Adds a returned car back to the stock.
+        Checks if the car can be returned, if possible, adds it
+        back to the shop's stock.
 
         Parameters:
-            key (str): The type of car being returned.
+            car_type (str): The type of car being returned.
             car: The car object being returned.
 
         Returns:
@@ -75,45 +77,45 @@ class RentalShop:
                 False if the car type does not exist.
         """
         try:
-            self.__add_car(key, car)
-            return True
+            self.__add_car(car_type, car)
+            return True # The car can be returned and is successfully added.
         except KeyError: # Handles the error of the car type not existing.
             return False
 
-    def add_to_stock(self, key, amount):
+    def add_to_stock(self, car_type, amount):
         """
         Adds a specified number of cars to the stock for a specific
         car type.
 
         Parameters:
-            key (str): The type of car to add to stock.
+            car_type (str): The type of car to add to stock.
             amount (int): The number of cars to add to the garage.
         """
         for i in range(amount):
-            self.__add_car(key, self.car_types[key])
+            self.__add_car(car_type, self.available_car_types[car_type])
 
-    def get_stock(self):
+    def display_stock(self):
         """
         Displays a summary of the stock for each type of car, including
         the total stock count.
         """
-        sum = 0
+        sum_of_cars = 0
         stock_summary = "| "
 
         # Iterate through the stock dictionary to build the stock summary text.
-        for key in self.stock:
-            amount = len(self.stock[key])
-            stock_summary += key + ": " + str(amount) + " | "
-            sum += amount
+        for car_type in self.rental_shop_stock:
+            amount_of_cars = len(self.rental_shop_stock[car_type])
+            stock_summary += car_type + ": " + str(amount_of_cars) + " | "
+            sum_of_cars += amount_of_cars
         
         print(
             "\n################STOCK################\n"
             + stock_summary 
-            + f"\nTotal: {sum}\n"
+            + f"\nTotal: {sum_of_cars}\n"
             "#####################################"
             )
 
-    def give_the_car(self, key):
+    def handout_car(self, car_type):
         """
         Removes and returns a car from stock of the specified type.
 
@@ -123,26 +125,26 @@ class RentalShop:
             This is carried out for simplicity.
 
         Parameters:
-            key (str): The type of car to rent out.
+            car_type (str): The type of car to rent out.
 
         Returns:
             The car object that was rented out.
         """
-        return self.stock[key].pop() # Returns the last car from the list (LIFO).
+        return self.rental_shop_stock[car_type].pop() # Returns the last car from the list (LIFO).
     
-    def available(self, key):
+    def is_available(self, car_type):
         """
         Checks if there are any cars available in the garage for the specific
         car type.
 
         Parameters:
-            key (str): The type of car to check availability for.
+            car_type (str): The type of car to check availability for.
 
         Returns:
             bool: True if the car type is in stock, otherwise False.
         """
         try:
-            return len(self.stock[key]) > 0
+            return len(self.rental_shop_stock[car_type]) > 0 # True if there are 0 or more cars of that type, False otherwise
         except KeyError: # Type of car is not sold in this shop.
             return False
     
@@ -179,7 +181,7 @@ class RentalShop:
 
         Parameters:
             rate (int): The daily rate for renting the car.
-            num_days: The number of days the car will or
+            num_days (int): The number of days the car will or
                 is rented for.
 
         Returns:
@@ -199,10 +201,10 @@ class RentalShop:
             vip_client (VIP): A new VIP object with the customer's details transferred.
         """
         print("You have now joined our loyalty programme!")
-        name = client.get_name() + "(VIP)" # Add VIP tag.
-        vip_client = VIP(name)
+        vip_customer_name = client.get_customer_name() + "(VIP)" # Add VIP tag.
+        vip_client = VIP(vip_customer_name)
         vip_client.transfer_details(client)
-        self.vip_list.append(name)
+        self.vip_customers.append(vip_customer_name)
         return vip_client    
 
     def downgrade(self, vip_client):
@@ -225,9 +227,9 @@ class RentalShop:
             "We are sorry to have you leave our loyalty programme...\n"
             "You are welcome to sign up again anytime!"
             )
-        name = vip_client.get_name()
-        client = Customer(name[:-5]) # Remove VIP tag (last 5 characters).
+        vip_customer_name = vip_client.get_customer_name()
+        client = Customer(vip_customer_name[:-5]) # Remove VIP tag (last 5 characters).
         client.transfer_details(vip_client)
-        self.vip_list.remove(name)
+        self.vip_customers.remove(vip_customer_name)
         return client
 

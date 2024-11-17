@@ -1,3 +1,4 @@
+# Procedural code for the rental platform.
 from customer import Customer
 from rental_shops import RentalShop
 import time
@@ -6,7 +7,8 @@ import time
 def load():
     """
     Provides a short pause, simulating the loading of different webpages.
-    Enables better user experience, as information is not loaded suddenly.
+    Enables better user experience (UX), as information is not 
+    loaded suddenly.
     """
     for i in range(3):
         time.sleep(0.5)
@@ -67,9 +69,9 @@ shop.add_to_stock("Hatchback", 4)
 shop.add_to_stock("Sedan", 3)
 shop.add_to_stock("SUV", 3) # Can add more car types later on.
 
-open = True
+shop_is_open = True
 
-print(f"Welcome to {shop.get_name()}!")
+print(f"Welcome to {shop.get_rental_shop_name()}!")
 load() # Short pause for better user experience.
 
 client_name = input("Please enter your name: ") # Simple name request.
@@ -79,9 +81,9 @@ client = Customer(client_name) # Instantiate a new regular customer with the pro
 load()
 
 # Main program loop.
-while open:
+while shop_is_open:
     option = input(
-        f"{client.get_name()}, what would you like to do?\n"
+        f"{client.get_customer_name()}, what would you like to do?\n"
         "1) Rent a car.\n"
         "2) Check available cars.\n"
         "3) Return car.\n"
@@ -94,7 +96,7 @@ while open:
     option = expected_int(option) # All options are integers.
 
     if option == 1:
-        if client.car_rented(): # Customer already has a car.
+        if client.is_renting_a_car(): # Customer already has a car.
             print(
                 "\nUnfortunately we only rent one car per customer.\n"
                 f"We appreciate your compliance with the {shop.get_name()} company policy."
@@ -104,19 +106,19 @@ while open:
             car_type = input("\nSelect car type: ").lower().title() # Ensure correct formatting.
             if car_type == "Suv": car_type = "SUV" # Special case as all letters are capital.
 
-            if shop.available(car_type):
+            if shop.is_available(car_type):
                 num_days = input(
                     "For how many days do you want to rent?\n"
                     "Your choice: "
                     )
                 num_days = expected_int(num_days) # Assumed integer number of days.
-                car = shop.give_the_car(car_type) # Retrieve car from shop stock.
+                car = shop.handout_car(car_type) # Retrieve car from shop stock.
 
                 print("\nHanding the car over.")
                 load()
                 client.rent_car(car, car_type, num_days) # Provide car rental details to the customer.
 
-                rate = shop.get_rate(car, num_days, client.vip_status())
+                rate = shop.get_rate(car, num_days, client.is_vip())
                 print(
                     f"You have rented a {car_type} car for {num_days} days.\n"
                     f"You will be charged £{rate} per day.\n"
@@ -134,14 +136,14 @@ while open:
     elif option == 2:
         print("Checking available cars.")
         load()
-        shop.get_stock() # Display stock of each car type and total stock.
+        shop.display_stock() # Display stock of each car type and total stock.
         go_back()
 
     elif option == 3:
         details = client.return_car() # Retrieve rental details from the customer,
         car, car_type, num_days = details["car"], details["type"], details["days"]
 
-        if shop.return_car(car_type, car): # Check if the car type is valid and can be returned.
+        if shop.is_returnable(car_type, car): # Check if the car type is valid and can be returned.
             print("Retrieving the car.")
             load()
 
@@ -151,7 +153,7 @@ while open:
                 )
             load()
 
-            rate = shop.get_rate(car, num_days, client.vip_status())
+            rate = shop.get_rate(car, num_days, client.is_vip())
             price = shop.get_price(rate, num_days)
             # Display the bill.
             print(
@@ -173,7 +175,7 @@ while open:
         print("\nRetrieving details.")
         load()
 
-        if client.vip_status(): # Check if the customer is already a VIP.
+        if client.is_vip(): # Check if the customer is already a VIP.
             print(
                 "You are part of our loyalty programme!\n"
                 "Enjoy our discounted rental rates!"
@@ -182,7 +184,7 @@ while open:
             # Offer option to leave the loyalty programme.
             downgrade = input("Press e to downgrade: ").lower()
             if downgrade == "e":
-                print(f"Downgrading {client.name} and transferring details.")
+                print(f"Downgrading {client.get_customer_name()} and transferring details.")
                 load()
 
                 client = shop.downgrade(client) # Regular customer.
@@ -199,7 +201,7 @@ while open:
             # Offer option to sign up to the loyalty programme.
             upgrade = input("Press y to upgrade: ").lower()
             if upgrade == "y":
-                print(f"Upgrading {client.name} and transferring details.")
+                print(f"Upgrading {client.get_customer_name()} and transferring details.")
                 load()
 
                 client = shop.upgrade(client) # VIP customer.
@@ -210,7 +212,7 @@ while open:
     elif option == 5: # Exit the program.
         print("\nThank you for stopping by! See you soon!")
         load() # Short delay for friendly exit message.
-        open = False
+        shop_is_open = False
 
     else: # Handle invalid options.
         print("Invalid option, choose between the available choices.")
